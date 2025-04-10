@@ -1,0 +1,18 @@
+:root {
+    --button-hover-color: #525255;
+    --button-default-color: transparent;
+    --button-focus-color: #29292b;
+}
+
+.button-clear-background {
+    background-color: var(--button-default-color);
+    border-width: 0;
+}
+
+.button:hover {
+    background-color: var(--button-hover-color);
+}
+
+.button:active {
+    background-color: var(--button-focus-color);
+}
