@@ -19,6 +19,7 @@ namespace Dastan.Scenester.Editor.UI.Panel.ScenePanel
             if (GUI.changed)
             {
                 EditorUtility.SetDirty(dialogue.Scenario);
+                EditorUtility.SetDirty(dialogue);
             }
         }
     }
