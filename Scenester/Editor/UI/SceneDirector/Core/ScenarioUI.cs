@@ -55,18 +55,8 @@ namespace Dastan.Scenester.Editor.UI.SceneDirector.Core
         {
             base.BuildContextualMenu(evt);
             Vector2 graphMousePosition = contentViewContainer.WorldToLocal(evt.mousePosition);
-
-            SimpleDialogue simpleDialogue = ScriptableObject.CreateInstance<SimpleDialogue>();
-            simpleDialogue.Scenario = _scenario;
-            simpleDialogue.key = "Simple Dialogue " + (_scenario.GetDialogues().Count + 1);
-            _scenario.AddDialogue(simpleDialogue, graphMousePosition);
-            evt.menu.AppendAction("Dialogues/Simple Dialogue", action => AddDialogueNode(new SimpleDialogueUI(simpleDialogue), graphMousePosition), DropdownMenuAction.AlwaysEnabled);
-        }
-
-        public void AddDialogueNode(DialogueUI dialogueUI, Vector2 position)
-        {
-            dialogueUI.SetPosition(new Rect(position, new Vector2(100, 100)));
-            AddElement(dialogueUI);
+            
+            evt.menu.AppendAction("Dialogues/Simple Dialogue", action => AddElement(DialogueNodeFactory.CreateSimpleDialogue(_scenario, graphMousePosition)), DropdownMenuAction.AlwaysEnabled);
         }
     }
 }
