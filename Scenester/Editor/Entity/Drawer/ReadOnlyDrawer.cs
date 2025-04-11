@@ -12,7 +12,7 @@ namespace Dastan.Scenester.Editor.Entity.Drawer
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             GUI.enabled = false;
-            // EditorGUI.EnumPopup(position, label, Enum.ToObject(property.enumType, property.enumValueIndex));
+            EditorGUI.PropertyField(position, property, label, true);
             GUI.enabled = true;
         }
 
