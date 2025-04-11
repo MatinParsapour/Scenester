@@ -14,6 +14,8 @@ namespace Dastan.Scenester.Editor.Entity.Base
         private readonly List<Port> _inputPorts = new List<Port>();
         private readonly List<Port> _outputPorts = new List<Port>();
         public Scenario Scenario { get; set; }
+        
+        private readonly List<Component> _components = new List<Component>();
 
         protected Dialogue(SceneUnitType type, Scenario scenario): base(type)
         {
@@ -29,6 +31,20 @@ namespace Dastan.Scenester.Editor.Entity.Base
             else
             {
                 ports.Remove(port);
+            }
+            
+            EditorUtility.SetDirty(Scenario);
+        }
+
+        private void UpdateComponents(Component component, bool add)
+        {
+            if (add)
+            {
+                _components.Add(component);
+            }
+            else
+            {
+                _components.Remove(component);
             }
             
             EditorUtility.SetDirty(Scenario);
@@ -52,6 +68,16 @@ namespace Dastan.Scenester.Editor.Entity.Base
         public void RemoveOutput(Port port)
         {
             UpdatePorts(port, false, _outputPorts);
+        }
+
+        public void AddComponent(Component component)
+        {
+            UpdateComponents(component, true);
+        }
+        
+        public void RemoveComponent(Component component)
+        {
+            UpdateComponents(component, false);
         }
 
         public abstract Dialogue Execute();
