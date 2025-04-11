@@ -10,8 +10,9 @@ namespace Dastan.Scenester.Entity.Base
 
         private readonly string _id = System.Guid.NewGuid() + "_" + System.Guid.NewGuid();
         
-        [SerializeField] [ReadOnly] public SceneUnitType type;
+        [SerializeField] public SceneUnitType type;
         [SerializeField] public string key;
+        [HideInInspector] public bool isNew;
 
         public string ID => _id;
 
