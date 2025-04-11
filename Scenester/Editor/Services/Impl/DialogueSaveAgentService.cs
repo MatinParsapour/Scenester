@@ -21,7 +21,6 @@ namespace Dastan.Scenester.Editor.Services.Impl
             if (string.IsNullOrEmpty(AssetDatabase.GetAssetPath(dialogue)))
             {
                 AssetDatabase.CreateAsset(dialogue, AssetDatabase.GenerateUniqueAssetPath($"{ScenariosPath}/{dialogue.Scenario.key}/Dialogues/{dialogue.key}.asset"));
-
             } else
             {
                 if (dialogue.isNew)

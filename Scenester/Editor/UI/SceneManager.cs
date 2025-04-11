@@ -1,10 +1,12 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 using Dastan.Scenester.Editor.Entity.Base;
 using Dastan.Scenester.Editor.Services;
 using Dastan.Scenester.Editor.Services.Impl;
 using Dastan.Scenester.Editor.UI.Btn;
 using Dastan.Scenester.Editor.UI.SceneDirector.Bar;
+using Dastan.Scenester.Editor.util;
 using UnityEditor;
 using UnityEngine;
 
@@ -37,24 +39,27 @@ namespace Dastan.Scenester.Editor.UI
 
         public static IEnumerator Save(Scenario scenario)
         {
+            ProgressBarUtility progress = ProgressBarUtility.Initialize("Saving...", "Working...").Progress();
             try
             {
-                EditorUtility.DisplayProgressBar("Saving...", "Working...", 0);
                 bool success = ScenarioAgent.Save(scenario);
-                EditorUtility.DisplayProgressBar("Saving...", "Working...", 10);
+                progress.SetInfo("Saving Scenario...").Progress();
+                List<Dialogue> dialogues = scenario.GetDialogues();
+                progress.SetIncrementer(90f / dialogues.Count);
                 if (success)
                 {
-                    foreach (Dialogue dialogue in scenario.GetDialogues())
+                    foreach (Dialogue dialogue in dialogues)
                     {
                         DialogueAgent.Save(dialogue);
+                        progress.SetInfo("Saving Dialogue...").Progress();
                     }
                 }
                 yield return null;
-                EditorUtility.DisplayProgressBar("Saving...", "Working...", 100);
+                progress.Done();
             }
             finally
             {
-                EditorUtility.ClearProgressBar();
+                progress.Clear();
             }
 
         }
