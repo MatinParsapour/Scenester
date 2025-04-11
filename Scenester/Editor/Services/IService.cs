@@ -1,6 +1,6 @@
 namespace Dastan.Scenester.Editor.Services
 {
-    public interface Service
+    public interface IService
     {
         
     }

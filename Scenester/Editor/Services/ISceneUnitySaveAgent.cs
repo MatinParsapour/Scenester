@@ -1,6 +1,8 @@
+using Dastan.Scenester.Entity.Base;
+
 namespace Dastan.Scenester.Editor.Services
 {
-    public class ISceneUnitySaveAgent
+    public interface ISceneUnitySaveAgent<in T> : ISaveAgentService<T> where T : SceneUnit
     {
         
     }
