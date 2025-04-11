@@ -13,14 +13,14 @@ namespace Dastan.Scenester.Editor.Services.Impl
                 return true;
             }
             
-            if (!AssetDatabase.IsValidFolder($"Assets/Dastan/Scenester/Resources/Scenarios/{dialogue.Scenario.key}/Dialogues"))
+            if (!AssetDatabase.IsValidFolder($"{ScenariosPath}/{dialogue.Scenario.key}/Dialogues"))
             {
-                AssetDatabase.CreateFolder($"Assets/Dastan/Scenester/Resources/Scenarios/{dialogue.Scenario.key}", "Dialogues");
+                AssetDatabase.CreateFolder($"{ScenariosPath}/{dialogue.Scenario.key}", "Dialogues");
             }
 
             if (string.IsNullOrEmpty(AssetDatabase.GetAssetPath(dialogue)))
             {
-                AssetDatabase.CreateAsset(dialogue, AssetDatabase.GenerateUniqueAssetPath($"Assets/Dastan/Scenester/Resources/Scenarios/{dialogue.Scenario.key}/Dialogues/{dialogue.key}.asset"));
+                AssetDatabase.CreateAsset(dialogue, AssetDatabase.GenerateUniqueAssetPath($"{ScenariosPath}/{dialogue.Scenario.key}/Dialogues/{dialogue.key}.asset"));
 
             } else
             {

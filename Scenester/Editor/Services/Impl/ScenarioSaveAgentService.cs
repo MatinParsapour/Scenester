@@ -13,9 +13,9 @@ namespace Dastan.Scenester.Editor.Services.Impl
                 return true;
             }
 
-            if (!AssetDatabase.IsValidFolder("Assets/Dastan/Scenester/Resources/Scenarios/" + scenario.key))
+            if (!AssetDatabase.IsValidFolder($"{ScenariosPath}/" + scenario.key))
             {
-                string folderId = AssetDatabase.CreateFolder("Assets/Dastan/Scenester/Resources/Scenarios", scenario.key);
+                string folderId = AssetDatabase.CreateFolder($"{ScenariosPath}", scenario.key);
                 AssetDatabase.CreateAsset(scenario, AssetDatabase.GenerateUniqueAssetPath($"{AssetDatabase.GUIDToAssetPath(folderId)}/{scenario.key}.asset"));
             }
             else
