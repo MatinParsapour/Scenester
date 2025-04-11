@@ -34,7 +34,7 @@ namespace Dastan.Scenester.Editor.UI.SceneDirector.Core
 
             this.AddManipulator(new ContentDragger());
             this.AddManipulator(new SelectionDragger());
-            this.AddManipulator(new RectangleSelector());
+            // this.AddManipulator(new RectangleSelector());
 
 
             // Add grid background
@@ -58,6 +58,7 @@ namespace Dastan.Scenester.Editor.UI.SceneDirector.Core
 
             SimpleDialogue simpleDialogue = ScriptableObject.CreateInstance<SimpleDialogue>();
             simpleDialogue.Scenario = _scenario;
+            simpleDialogue.key = "Simple Dialogue " + (_scenario.GetDialogues().Count + 1);
             _scenario.AddDialogue(simpleDialogue, graphMousePosition);
             evt.menu.AppendAction("Dialogues/Simple Dialogue", action => AddDialogueNode(new SimpleDialogueUI(simpleDialogue), graphMousePosition), DropdownMenuAction.AlwaysEnabled);
         }
