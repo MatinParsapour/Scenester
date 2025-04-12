@@ -13,6 +13,8 @@ namespace Dastan.Scenester.Editor.Entity.Base
         [HideInInspector] 
         public Dialogue nextDialogue;
         public Scenario Scenario { get; set; }
+        
+        private readonly List<Component> _components = new List<Component>();
 
         protected Dialogue(SceneUnitType type, Scenario scenario): base(type)
         {
@@ -25,6 +27,7 @@ namespace Dastan.Scenester.Editor.Entity.Base
             EditorUtility.SetDirty(Scenario);
         }
 
+
         public void AddNext(Dialogue dialogue)
         {
             UpdateDialogues(dialogue);
@@ -34,7 +37,17 @@ namespace Dastan.Scenester.Editor.Entity.Base
         {
             UpdateDialogues(null);
         }
+
+        public void AddComponent(Component component)
+        {
+            UpdateComponents(component, true);
+        }
         
+        public void RemoveComponent(Component component)
+        {
+            UpdateComponents(component, false);
+        }
+
         public abstract Dialogue Execute();
     }
 }
