@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Dastan.Scenester.Editor.Entity.Base;
+using Dastan.Scenester.Editor.UI.Panel.ScenePanel;
 using Dastan.Scenester.Editor.util;
 using NUnit.Framework;
 using UnityEditor;
@@ -15,12 +16,14 @@ namespace Dastan.Scenester.Editor.UI.Panel.Component
     {
 
         private static Dialogue _dialogue;
+        private static DialogueEditorPanel _dialogueEditorPanel;
         private VisualElement _root;
         private List<Entity.Base.Component> _components;
 
-        public static void Show(Rect rect, Dialogue dialogue)
+        public static void Show(DialogueEditorPanel dialogueEditorPanel, Rect rect, Dialogue dialogue)
         {
             _dialogue = dialogue;
+            _dialogueEditorPanel = dialogueEditorPanel;
             
             ComponentPopupPanel window = CreateInstance<ComponentPopupPanel>();
             Vector2 screenPos = new Vector2(rect.x + rect.width, rect.y);
@@ -48,6 +51,7 @@ namespace Dastan.Scenester.Editor.UI.Panel.Component
                 Button button = new Button(() =>
                 {
                     _dialogue.AddComponent(component);
+                    _dialogueEditorPanel.AddComponent(component);
                     Close();
                 })
                 {
