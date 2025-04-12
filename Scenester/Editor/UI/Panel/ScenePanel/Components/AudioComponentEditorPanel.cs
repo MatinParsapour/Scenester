@@ -8,9 +8,7 @@ namespace Dastan.Scenester.Editor.UI.Panel.ScenePanel
     {
         public override void OnInspectorGUI()
         {
-            // base.OnInspectorGUI();
-            
-            EditorGUILayout.TextField("Name", "");
+            base.OnInspectorGUI();
         }
     }
 }
