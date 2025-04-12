@@ -1,5 +1,9 @@
+using Dastan.Scenester.Editor.Entity.Components;
+using UnityEditor;
+
 namespace Dastan.Scenester.Editor.UI.Panel.ScenePanel
 {
+    [CustomEditor(typeof(SubtitleComponent))]
     public class SubtitleComponentEditorPanel : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
