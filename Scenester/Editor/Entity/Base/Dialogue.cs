@@ -11,8 +11,7 @@ namespace Dastan.Scenester.Editor.Entity.Base
     public abstract class Dialogue : SceneUnit
     {
         [HideInInspector] 
-        private readonly List<Port> _inputPorts = new List<Port>();
-        private readonly List<Port> _outputPorts = new List<Port>();
+        public Dialogue nextDialogue;
         public Scenario Scenario { get; set; }
 
         protected Dialogue(SceneUnitType type, Scenario scenario): base(type)
@@ -20,40 +19,22 @@ namespace Dastan.Scenester.Editor.Entity.Base
             Scenario = scenario;
         }
 
-        private void UpdatePorts(Port port, bool add, List<Port> ports)
+        private void UpdateDialogues(Dialogue dialogue)
         {
-            if (add)
-            {
-                ports.Add(port);
-            }
-            else
-            {
-                ports.Remove(port);
-            }
-            
+            nextDialogue = dialogue;
             EditorUtility.SetDirty(Scenario);
         }
+
+        public void AddNext(Dialogue dialogue)
+        {
+            UpdateDialogues(dialogue);
+        }
+
+        public void RemoveNext()
+        {
+            UpdateDialogues(null);
+        }
         
-        public void AddInput(Port port)
-        {
-            UpdatePorts(port, true, _inputPorts); 
-        }
-
-        public void RemoveInput(Port port)
-        {
-            UpdatePorts(port, false, _inputPorts);
-        }
-
-        public void AddOutput(Port port)
-        {
-            UpdatePorts(port, true, _outputPorts);
-        }
-
-        public void RemoveOutput(Port port)
-        {
-            UpdatePorts(port, false, _outputPorts);
-        }
-
         public abstract Dialogue Execute();
     }
 }

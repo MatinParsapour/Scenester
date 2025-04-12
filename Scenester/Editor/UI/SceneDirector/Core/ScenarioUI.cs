@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Dastan.Scenester.Editor.Entity.Base;
 using Dastan.Scenester.Editor.Entity.Dialogues;
 using Dastan.Scenester.Editor.UI.Inspector;
@@ -74,6 +75,17 @@ namespace Dastan.Scenester.Editor.UI.SceneDirector.Core
             }
 
             return compatiblePorts;
+        }
+
+        public override EventPropagation DeleteSelection()
+        {
+            var edgesToDelete = selection.OfType<Edge>().ToList();
+            foreach (Edge edge in edgesToDelete)
+            {
+                EdgeConnectorListener.OnDelete(edge);
+            }
+
+            return base.DeleteSelection();
         }
     }
 }
