@@ -25,6 +25,22 @@ namespace Dastan.Scenester.Editor.Entity.Base
         {
             nextDialogue = dialogue;
             EditorUtility.SetDirty(Scenario);
+            EditorUtility.SetDirty(this);
+        }
+
+        private void UpdateComponents(Component component, bool add)
+        {
+            if (add)
+            {
+                _components.Add(component);
+            }
+            else
+            {
+                _components.Remove(component);
+            }
+            
+            EditorUtility.SetDirty(Scenario);
+            EditorUtility.SetDirty(this);
         }
 
 
