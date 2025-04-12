@@ -1,3 +1,5 @@
+using Dastan.Scenester.Editor.Entity.Dialogues;
+using Dastan.Scenester.Editor.UI.SceneDirector.Dialogues;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
@@ -5,25 +7,19 @@ namespace Dastan.Scenester.Editor.UI.SceneDirector.Core
 {
     public class EdgeConnectorListener : IEdgeConnectorListener
     {
-        public void OnDropOutsidePort(GraphView graphView, Edge edge, Vector2 position) // Note the added 'Edge edge' parameter
-        {
-            Debug.Log("OnDropOutsidePort");
-        }
-
         public void OnDrop(GraphView graphView, Edge edge)
         {
-            Debug.Log($"Edge dropped from {edge.output.node.title}.{edge.output.portName} to {edge.input.node.title}.{edge.input.portName}");
-            // Implement your connection logic here
+            SimpleDialogueUI output = edge.output.node as SimpleDialogueUI;
+            SimpleDialogueUI input = edge.input.node as SimpleDialogueUI;
+            input?.Dialogue.AddNext(output?.Dialogue);
         }
 
-        public void OnDropOutsidePort(GraphView graphView, Vector2 position)
+        public static void OnDelete(Edge edge)
         {
-            Debug.Log("OnDropOutsidePort (Old Signature - Remove this if present)");
+            SimpleDialogueUI input = edge.input.node as SimpleDialogueUI;
+            input?.Dialogue.RemoveNext();
         }
 
-        public void OnDropOutsidePort(Edge graphView, Vector2 position)
-        {
-            Debug.Log("OnDropOutsidePort fdsa (Old Signature - Remove this if present)");
-        }
+        public void OnDropOutsidePort(Edge graphView, Vector2 position) { }
     }
 }

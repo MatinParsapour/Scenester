@@ -5,6 +5,7 @@ using Dastan.Scenester.Editor.Entity.Base;
 using Dastan.Scenester.Editor.Services;
 using Dastan.Scenester.Editor.Services.Impl;
 using Dastan.Scenester.Editor.UI.Btn;
+using Dastan.Scenester.Editor.UI.SceneDirector;
 using Dastan.Scenester.Editor.UI.SceneDirector.Bar;
 using Dastan.Scenester.Editor.util;
 using UnityEditor;
@@ -30,6 +31,7 @@ namespace Dastan.Scenester.Editor.UI
         public static void DeleteScene(ScenarioButtonContainer scenarioButtonContainer)
         {
             TabBar.GetInstance(null).Remove(scenarioButtonContainer);
+            SceneContainer.GetInstance().Clear();
         }
 
         public static int SizeScene(ScenarioButtonContainer scenarioButtonContainer)
