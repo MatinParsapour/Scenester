@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Dastan.Scenester.Editor.Entity.Base;
 using Dastan.Scenester.Editor.Entity.Dialogues;
 using UnityEngine;
