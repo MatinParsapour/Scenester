@@ -12,10 +12,11 @@ namespace Dastan.Scenester.Editor.Entity.Base
     {
         [HideInInspector] 
         public Dialogue nextDialogue;
+        [HideInInspector]
+        public List<Component> components;
+
         public Scenario Scenario { get; set; }
         
-        private readonly List<Component> _components = new List<Component>();
-
         protected Dialogue(SceneUnitType type, Scenario scenario): base(type)
         {
             Scenario = scenario;
@@ -32,11 +33,11 @@ namespace Dastan.Scenester.Editor.Entity.Base
         {
             if (add)
             {
-                _components.Add(component);
+                components.Add(component);
             }
             else
             {
-                _components.Remove(component);
+                components.Remove(component);
             }
             
             EditorUtility.SetDirty(Scenario);

@@ -12,7 +12,11 @@ namespace Dastan.Scenester.Editor.Entity.Dialogues
 
         public override Dialogue Execute()
         {
-            return this;
+            foreach (Base.Component component in components)
+            {
+                component.Execute();
+            }
+            return nextDialogue?.Execute();
         }
     }
 }
