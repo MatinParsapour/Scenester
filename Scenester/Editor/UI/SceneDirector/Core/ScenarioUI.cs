@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Dastan.Scenester.Editor.Entity.Base;
 using Dastan.Scenester.Editor.Entity.Dialogues;
 using Dastan.Scenester.Editor.UI.Inspector;
@@ -57,6 +58,22 @@ namespace Dastan.Scenester.Editor.UI.SceneDirector.Core
             Vector2 graphMousePosition = contentViewContainer.WorldToLocal(evt.mousePosition);
             
             evt.menu.AppendAction("Dialogues/Simple Dialogue", action => AddElement(DialogueNodeFactory.CreateSimpleDialogue(_scenario, graphMousePosition)), DropdownMenuAction.AlwaysEnabled);
+        }
+
+        public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
+        {
+            List<Port> compatiblePorts = new List<Port>();
+
+            foreach (Port port in ports)
+            {
+                if (startPort == port) continue;
+                if (startPort.node == port.node) continue;
+                if (startPort.direction == port.direction) continue;
+
+                compatiblePorts.Add(port);
+            }
+
+            return compatiblePorts;
         }
     }
 }
