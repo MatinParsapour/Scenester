@@ -12,6 +12,7 @@ namespace Dastan.Scenester.Editor.UI.SceneDirector.Dialogues
             SimpleDialogue simpleDialogue = ScriptableObject.CreateInstance<SimpleDialogue>();
             simpleDialogue.Scenario = scenario;
             simpleDialogue.key = "Simple Dialogue " + (scenario.GetDialogues().Count + 1);
+            simpleDialogue.components = new List<Entity.Base.Component>();
             scenario.AddDialogue(simpleDialogue, position);
             SimpleDialogueUI simpleDialogueUI = new SimpleDialogueUI(simpleDialogue);
             simpleDialogueUI.SetPosition(new Rect(position, new Vector2(100, 100)));
