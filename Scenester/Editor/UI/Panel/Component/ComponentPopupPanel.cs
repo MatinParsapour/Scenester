@@ -51,6 +51,7 @@ namespace Dastan.Scenester.Editor.UI.Panel.Component
                 Button button = new Button(() =>
                 {
                     _dialogue.AddComponent(component);
+                    component.Dialogue = _dialogue;
                     _dialogueEditorPanel.AddComponent(component);
                     Close();
                 })
