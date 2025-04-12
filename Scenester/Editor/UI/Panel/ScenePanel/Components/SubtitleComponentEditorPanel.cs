@@ -8,7 +8,9 @@ namespace Dastan.Scenester.Editor.UI.Panel.ScenePanel
     {
         public override void OnInspectorGUI()
         {
-            base.OnInspectorGUI();
+            serializedObject.Update();
+            DrawPropertiesExcluding(serializedObject,"m_Script");
+            serializedObject.ApplyModifiedProperties();
         }
     }
 }
