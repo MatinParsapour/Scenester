@@ -42,7 +42,7 @@ namespace Dastan.Scenester.Editor.UI.SceneDirector.Core
             // Add grid background
             GridBackground grid = new GridBackground();
             Insert(0, grid);
-
+            AddElement(DialogueNodeFactory.CreateEntryDialogue(_scenario, new Vector2(0, 0)));
         }
 
         private void OnMouseDown(MouseDownEvent e)
@@ -83,6 +83,12 @@ namespace Dastan.Scenester.Editor.UI.SceneDirector.Core
             foreach (Edge edge in edgesToDelete)
             {
                 EdgeConnectorListener.OnDelete(edge);
+            }
+            
+            List<EntryDialogueUI> dialoguesToDelete = selection.OfType<EntryDialogueUI>().ToList();
+            if (dialoguesToDelete.Count > 0)
+            {
+                return EventPropagation.Stop;
             }
 
             return base.DeleteSelection();

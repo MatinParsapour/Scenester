@@ -16,14 +16,14 @@ namespace Dastan.Scenester.Editor.UI.Panel.Component
     {
 
         private static Dialogue _dialogue;
-        private static DialogueEditorPanel _dialogueEditorPanel;
+        private static SimpleDialogueEditorPanel _simpleDialogueEditorPanel;
         private VisualElement _root;
         private List<Entity.Base.Component> _components;
 
-        public static void Show(DialogueEditorPanel dialogueEditorPanel, Rect rect, Dialogue dialogue)
+        public static void Show(SimpleDialogueEditorPanel simpleDialogueEditorPanel, Rect rect, Dialogue dialogue)
         {
             _dialogue = dialogue;
-            _dialogueEditorPanel = dialogueEditorPanel;
+            _simpleDialogueEditorPanel = simpleDialogueEditorPanel;
             
             ComponentPopupPanel window = CreateInstance<ComponentPopupPanel>();
             Vector2 screenPos = new Vector2(rect.x + rect.width, rect.y);
@@ -52,7 +52,7 @@ namespace Dastan.Scenester.Editor.UI.Panel.Component
                 {
                     _dialogue.AddComponent(component);
                     component.Dialogue = _dialogue;
-                    _dialogueEditorPanel.AddComponent(component);
+                    _simpleDialogueEditorPanel.AddComponent(component);
                     Close();
                 })
                 {

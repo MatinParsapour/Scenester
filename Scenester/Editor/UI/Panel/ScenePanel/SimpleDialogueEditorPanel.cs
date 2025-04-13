@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Dastan.Scenester.Editor.UI.Panel.ScenePanel
 {
     [CustomEditor(typeof(SimpleDialogue))]
-    public class DialogueEditorPanel : UnityEditor.Editor
+    public class SimpleDialogueEditorPanel : UnityEditor.Editor
     {
 
         private Dialogue _dialogue;
@@ -44,7 +44,7 @@ namespace Dastan.Scenester.Editor.UI.Panel.ScenePanel
 
             foreach (UnityEditor.Editor editor in _componentEditors)
             {
-                if (editor != null)
+                if (!ReferenceEquals(editor, null))
                 {
                     EditorGUILayout.BeginVertical("box");
                     editor.OnInspectorGUI();

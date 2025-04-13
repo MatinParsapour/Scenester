@@ -6,6 +6,7 @@ namespace Dastan.Scenester.Editor.Enumeration
         SimpleDialogue,
         Scenario,
         Audio,
-        Subtitle
+        Subtitle,
+        Entry,
     }
 }

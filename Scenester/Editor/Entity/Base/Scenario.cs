@@ -5,6 +5,8 @@ using Dastan.Scenester.Editor.Enumeration;
 using Dastan.Scenester.Entity.Base;
 using NUnit.Framework;
 using UnityEditor;
+using UnityEngine;
+using UnityEngine.Serialization;
 using Vector2 = UnityEngine.Vector2;
 
 namespace Dastan.Scenester.Editor.Entity.Base
@@ -17,7 +19,9 @@ namespace Dastan.Scenester.Editor.Entity.Base
         {
             
         }
-        
+
+        [HideInInspector]
+        public EntryDialogue entryDialogue;
         private readonly Dictionary<Dialogue, Vector2> _dialogues = new Dictionary<Dialogue, Vector2>();
 
 
@@ -49,6 +53,12 @@ namespace Dastan.Scenester.Editor.Entity.Base
         public List<Dialogue> GetDialogues()
         {
             return _dialogues.Keys.ToList();
+        }
+
+
+        public void Play()
+        {
+            entryDialogue.Execute();
         }
         
     }
