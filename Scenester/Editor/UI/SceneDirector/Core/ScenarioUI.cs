@@ -42,7 +42,13 @@ namespace Dastan.Scenester.Editor.UI.SceneDirector.Core
             // Add grid background
             GridBackground grid = new GridBackground();
             Insert(0, grid);
-            AddElement(DialogueNodeFactory.CreateEntryDialogue(_scenario, new Vector2(0, 0)));
+            
+            // Using execute create the entry point when the UI is initialized
+            schedule.Execute(() =>
+            {
+                const float offset = 200;
+                AddElement(DialogueNodeFactory.CreateEntryDialogue(_scenario, new Vector2(contentContainer.resolvedStyle.width - offset, (contentContainer.resolvedStyle.height / 2))));
+            }).ExecuteLater(300);
         }
 
         private void OnMouseDown(MouseDownEvent e)
