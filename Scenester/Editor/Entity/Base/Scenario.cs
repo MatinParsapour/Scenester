@@ -50,9 +50,9 @@ namespace Dastan.Scenester.Editor.Entity.Base
             UpdateDialogues(dialogue, Vector2.zero, false);
         }
 
-        public List<Dialogue> GetDialogues()
+        public Dictionary<Dialogue, Vector2> GetDialogues()
         {
-            return _dialogues.Keys.ToList();
+            return _dialogues;
         }
 
 

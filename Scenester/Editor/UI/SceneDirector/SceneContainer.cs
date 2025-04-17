@@ -1,4 +1,5 @@
 using Dastan.Scenester.Editor.Entity.Base;
+using Dastan.Scenester.Editor.UI.Btn;
 using Dastan.Scenester.Editor.UI.SceneDirector.Core;
 using UnityEditor;
 using UnityEngine;
@@ -14,14 +15,13 @@ namespace Dastan.Scenester.Editor.UI.SceneDirector
 
         public static SceneContainer GetInstance()
         {
-            return _instance ??= new SceneContainer(new ScenarioUI(ScriptableObject.CreateInstance<Scenario>()));
+            return _instance ??= new SceneContainer();
         }
 
-        private SceneContainer(ScenarioUI scenarioUI)
+        private SceneContainer()
         {
             styleSheets.Add(AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/Dastan/Scenester/Editor/UI/Styles/Common.uss"));
             AddToClassList("one-flex-grow");
-            ChangeUI(scenarioUI);
         }
 
         public void ChangeUI(ScenarioUI scenarioUI)

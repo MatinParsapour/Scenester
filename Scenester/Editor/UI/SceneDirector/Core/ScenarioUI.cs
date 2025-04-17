@@ -42,13 +42,24 @@ namespace Dastan.Scenester.Editor.UI.SceneDirector.Core
             // Add grid background
             GridBackground grid = new GridBackground();
             Insert(0, grid);
-            
+
+            IVisualElementScheduledItem scheduled = null;
             // Using execute create the entry point when the UI is initialized
-            schedule.Execute(() =>
+            scheduled = schedule.Execute(() =>
             {
+                if (float.IsNaN(contentContainer.resolvedStyle.width) || float.IsNaN(contentContainer.resolvedStyle.height))
+                {
+                    return;
+                }
+                
                 const float offset = 200;
-                AddElement(DialogueNodeFactory.CreateEntryDialogue(_scenario, new Vector2(contentContainer.resolvedStyle.width - offset, (contentContainer.resolvedStyle.height / 2))));
-            }).ExecuteLater(300);
+                Debug.Log("Width: " + contentContainer.resolvedStyle.width);
+                Debug.Log("Height: " + contentContainer.resolvedStyle.height);
+                EntryDialogueUI entry = DialogueNodeFactory.CreateEntryDialogue(_scenario, new Vector2(contentContainer.resolvedStyle.width - offset, contentContainer.resolvedStyle.height / 2));
+                entry.SetPosition(new Rect(new Vector2(100, 100), new Vector2(100, 100)));
+                AddElement(entry);
+                scheduled.Pause();
+            }).Every(16);
         }
 
         private void OnMouseDown(MouseDownEvent e)
