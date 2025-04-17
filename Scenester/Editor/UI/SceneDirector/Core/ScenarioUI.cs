@@ -43,6 +43,23 @@ namespace Dastan.Scenester.Editor.UI.SceneDirector.Core
             GridBackground grid = new GridBackground();
             Insert(0, grid);
 
+            IVisualElementScheduledItem scheduled = null;
+            // Using execute create the entry point when the UI is initialized
+            scheduled = schedule.Execute(() =>
+            {
+                if (float.IsNaN(contentContainer.resolvedStyle.width) || float.IsNaN(contentContainer.resolvedStyle.height))
+                {
+                    return;
+                }
+                
+                const float offset = 200;
+                Debug.Log("Width: " + contentContainer.resolvedStyle.width);
+                Debug.Log("Height: " + contentContainer.resolvedStyle.height);
+                EntryDialogueUI entry = DialogueNodeFactory.CreateEntryDialogue(_scenario, new Vector2(contentContainer.resolvedStyle.width - offset, contentContainer.resolvedStyle.height / 2));
+                entry.SetPosition(new Rect(new Vector2(100, 100), new Vector2(100, 100)));
+                AddElement(entry);
+                scheduled.Pause();
+            }).Every(16);
         }
 
         private void OnMouseDown(MouseDownEvent e)
@@ -83,6 +100,12 @@ namespace Dastan.Scenester.Editor.UI.SceneDirector.Core
             foreach (Edge edge in edgesToDelete)
             {
                 EdgeConnectorListener.OnDelete(edge);
+            }
+            
+            List<EntryDialogueUI> dialoguesToDelete = selection.OfType<EntryDialogueUI>().ToList();
+            if (dialoguesToDelete.Count > 0)
+            {
+                return EventPropagation.Stop;
             }
 
             return base.DeleteSelection();

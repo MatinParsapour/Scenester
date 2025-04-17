@@ -12,9 +12,10 @@ namespace Dastan.Scenester.Editor.UI.Btn
             clicked += CreateNewScenario;
         }
 
-        private void CreateNewScenario()
+        public void CreateNewScenario()
         {
-            SceneManager.AddScene(new ScenarioButtonContainer(new ScenarioUI(ScriptableObject.CreateInstance<Scenario>())));
+            ScenarioButtonContainer scenarioButtonContainer = new ScenarioButtonContainer(new ScenarioUI(ScriptableObject.CreateInstance<Scenario>()));
+            SceneManager.AddScene(scenarioButtonContainer);
         }
     }
 }

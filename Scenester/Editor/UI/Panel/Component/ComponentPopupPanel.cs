@@ -1,66 +1,57 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
 using Dastan.Scenester.Editor.Entity.Base;
+using Dastan.Scenester.Editor.Entity.Components;
 using Dastan.Scenester.Editor.UI.Panel.ScenePanel;
 using Dastan.Scenester.Editor.util;
 using NUnit.Framework;
 using UnityEditor;
+using UnityEditor.Experimental.GraphView;
+using UnityEditor.UIElements;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 using Object = UnityEngine.Object;
 
 namespace Dastan.Scenester.Editor.UI.Panel.Component
 {
-    public class ComponentPopupPanel : EditorWindow
+
+    public class ComponentPopupPanel : ScriptableObject, ISearchWindowProvider
     {
 
-        private static Dialogue _dialogue;
-        private static DialogueEditorPanel _dialogueEditorPanel;
-        private VisualElement _root;
-        private List<Entity.Base.Component> _components;
-
-        public static void Show(DialogueEditorPanel dialogueEditorPanel, Rect rect, Dialogue dialogue)
+        public Dialogue dialogue;
+        public Action<Entity.Base.Component> OnComponentSelected;
+        
+        public List<SearchTreeEntry> CreateSearchTree(SearchWindowContext context)
         {
-            _dialogue = dialogue;
-            _dialogueEditorPanel = dialogueEditorPanel;
+            List<SearchTreeEntry> tree = new List<SearchTreeEntry>();
+
+            tree.Add(new SearchTreeGroupEntry(new GUIContent("Components")));
+
+            tree.Add(new SearchTreeGroupEntry(new GUIContent("Action Components"), 1));
+            tree.Add(new SearchTreeEntry(new GUIContent("Audio Component")) { level = 2, userData = ComponentFactory.CreateAudioComponent(dialogue) });
+            tree.Add(new SearchTreeEntry(new GUIContent("Subtitle Component")) { level = 2, userData = ComponentFactory.CreateSubtitleComponent(dialogue) });
+
+            tree.Add(new SearchTreeGroupEntry(new GUIContent("Conditional Components"), 1));
             
-            ComponentPopupPanel window = CreateInstance<ComponentPopupPanel>();
-            Vector2 screenPos = new Vector2(rect.x + rect.width, rect.y);
-            Rect popupRect = new Rect(screenPos, new Vector2(rect.width, 365));
-            window.ShowAsDropDown(popupRect, popupRect.size);
+            return tree;
         }
 
-        private void CreateGUI()
+        public bool OnSelectEntry(SearchTreeEntry entry, SearchWindowContext context)
         {
-            VisualTreeAsset visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Dastan/Scenester/Editor/UI/Styles/ComponentPopup.uxml");
-            _root = visualTree.CloneTree();
-            rootVisualElement.Add(_root);
-            
-            PopulateComponents();
-        }
 
-        private void PopulateComponents()
-        {
-            var componentsScrollView = _root.Q<ScrollView>("ComponentsListScrollView");
-
-            _components = ComponentUtil.GetComponents(_dialogue);
-
-            foreach (Entity.Base.Component component in _components)
+            Entity.Base.Component component = entry.userData as Entity.Base.Component;
+            if (!ReferenceEquals(component, null))
             {
-                Button button = new Button(() =>
-                {
-                    _dialogue.AddComponent(component);
-                    component.Dialogue = _dialogue;
-                    _dialogueEditorPanel.AddComponent(component);
-                    Close();
-                })
-                {
-                    text = $"{component.type.ToString()}"
-                };
-
-                componentsScrollView.Add(button);
+                dialogue.AddComponent(component);
+                component.Dialogue = dialogue;
+                
+                OnComponentSelected?.Invoke(component);
             }
+            return true;
         }
     }
+    
 }

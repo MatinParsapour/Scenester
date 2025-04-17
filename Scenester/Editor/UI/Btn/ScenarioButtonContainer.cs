@@ -1,8 +1,10 @@
 using Dastan.Scenester.Editor.UI.Inspector;
 using Dastan.Scenester.Editor.UI.Label;
 using Dastan.Scenester.Editor.UI.SceneDirector;
+using Dastan.Scenester.Editor.UI.SceneDirector.Bar;
 using Dastan.Scenester.Editor.UI.SceneDirector.Core;
 using UnityEditor;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Dastan.Scenester.Editor.UI.Btn
@@ -12,21 +14,23 @@ namespace Dastan.Scenester.Editor.UI.Btn
 
         private ScenarioLabel _label;
         private ScenarioCloseButton _closeButton;
-        private readonly ScenarioUI _scenarioUI;
+        public readonly ScenarioUI ScenarioUI;
 
         public ScenarioButtonContainer(ScenarioUI scenarioUI)
-        {
-            _scenarioUI = scenarioUI;
-            _scenarioUI.Scenario.key = "Scenario " + SceneManager.SizeScene(this);
+        { 
+            ScenarioUI = scenarioUI;
+            ScenarioUI.Scenario.key = "Scenario " + (SceneManager.SizeScene() + 1);
             AddButtons();
+            
             Style();
             clicked += ShowScenario;
             ShowScenario();
+            HighlightActiveTab();
         }
 
         private void AddButtons()
         {
-            _label = new ScenarioLabel() { text = _scenarioUI.Scenario.key };
+            _label = new ScenarioLabel() { text = ScenarioUI.Scenario.key };
             _closeButton = new ScenarioCloseButton(this) { text = "×"};
             Add(_label);
             Add(_closeButton);
@@ -42,8 +46,19 @@ namespace Dastan.Scenester.Editor.UI.Btn
         
         private void ShowScenario()
         {
-            SceneContainer.GetInstance().ChangeUI(_scenarioUI);
-            SceneUnitInspector.GetInstance(_scenarioUI.Scenario).ChangeInspector();
+            SceneContainer.GetInstance().ChangeUI(ScenarioUI);
+            SceneUnitInspector.GetInstance(ScenarioUI.Scenario).ChangeInspector();
+            TabBar.GetInstance().MarkCurrentTab(this);
+        }
+
+        public void HighlightActiveTab()
+        {
+            AddToClassList("tab-container-active");
+        }
+
+        public void UnhighlightInactiveTab()
+        {
+            RemoveFromClassList("tab-container-active");
         }
         
     }

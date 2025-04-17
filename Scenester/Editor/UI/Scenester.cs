@@ -1,4 +1,5 @@
 using System;
+using Dastan.Scenester.Editor.UI.Btn;
 using Dastan.Scenester.Editor.UI.Inspector;
 using Dastan.Scenester.Editor.UI.SceneDirector;
 using Dastan.Scenester.Editor.UI.SceneDirector.Bar;
@@ -24,6 +25,7 @@ namespace Dastan.Scenester.Editor.UI
         {
             rootVisualElement.Add(ActionBar.GetInstance());
             rootVisualElement.Add(SceneContainer.GetInstance());
+            new AddScenarioButton().CreateNewScenario();
         }
 
         private void OnDisable()

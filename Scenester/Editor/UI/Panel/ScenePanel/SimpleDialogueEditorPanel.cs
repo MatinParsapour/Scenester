@@ -3,12 +3,13 @@ using Dastan.Scenester.Editor.Entity.Base;
 using Dastan.Scenester.Editor.Entity.Dialogues;
 using Dastan.Scenester.Editor.UI.Panel.Component;
 using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 namespace Dastan.Scenester.Editor.UI.Panel.ScenePanel
 {
     [CustomEditor(typeof(SimpleDialogue))]
-    public class DialogueEditorPanel : UnityEditor.Editor
+    public class SimpleDialogueEditorPanel : UnityEditor.Editor
     {
 
         private Dialogue _dialogue;
@@ -44,7 +45,7 @@ namespace Dastan.Scenester.Editor.UI.Panel.ScenePanel
 
             foreach (UnityEditor.Editor editor in _componentEditors)
             {
-                if (editor != null)
+                if (!ReferenceEquals(editor, null))
                 {
                     EditorGUILayout.BeginVertical("box");
                     editor.OnInspectorGUI();
@@ -57,8 +58,20 @@ namespace Dastan.Scenester.Editor.UI.Panel.ScenePanel
 
             if (GUI.Button(rect, "Add Component"))
             {
-                Rect panelRect = GUIUtility.GUIToScreenRect(rect);
-                ComponentPopupPanel.Show(this, panelRect, _dialogue);
+                Rect panelRect = GUILayoutUtility.GetLastRect();
+    
+                // Convert the button's position to screen space.
+                Vector2 screenPos = GUIUtility.GUIToScreenPoint(panelRect.position);
+    
+                // Optionally, add some offset (e.g., to place the popup below the button)
+                // screenPos.y += panelRect.height;
+                ComponentPopupPanel searchProvider = CreateInstance<ComponentPopupPanel>();
+                searchProvider.dialogue = _dialogue;
+                searchProvider.OnComponentSelected += (component =>
+                {
+                    _componentEditors.Add(CreateEditor(component));
+                });
+                SearchWindow.Open(new SearchWindowContext(screenPos), searchProvider);
             }
 
             if (GUI.changed)

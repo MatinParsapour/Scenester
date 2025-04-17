@@ -11,7 +11,7 @@ namespace Dastan.Scenester.Editor.UI.SceneDirector.Bar
     public class ActionBar : VisualElement
     {
         public ToolBar Toolbar { get; private set; } = ToolBar.Initialize();
-        public TabBar TabBar { get; private set; } = TabBar.GetInstance(new ScenarioButtonContainer(new ScenarioUI(ScriptableObject.CreateInstance<Scenario>())));
+        public TabBar TabBar { get; private set; } = TabBar.GetInstance();
 
         private static ActionBar _instance;
 
