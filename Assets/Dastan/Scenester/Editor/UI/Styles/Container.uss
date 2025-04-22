@@ -1,0 +1,18 @@
+:root {
+    --button-hover-color: #454547;
+    --button-default-color: transparent;
+    --button-focus-color: #29292b;
+    --button-active-color: #161617;
+}
+
+.tab-container:hover {
+    background-color: var(--button-hover-color);
+}
+
+.tab-container:active {
+    background-color: var(--button-focus-color);
+}
+
+.tab-container-active {
+    background-color: var(--button-active-color);
+}
