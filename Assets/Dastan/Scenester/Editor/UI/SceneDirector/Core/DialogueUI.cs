@@ -22,5 +22,11 @@ namespace Dastan.Scenester.Editor.UI.SceneDirector.Core
         {
             SceneUnitInspector.GetInstance(_dialogue).ChangeInspector();
         }
+
+        public override void SetPosition(Rect newPos)
+        {
+            base.SetPosition(newPos);
+            _dialogue.Position = newPos.position;
+        }
     }
 }

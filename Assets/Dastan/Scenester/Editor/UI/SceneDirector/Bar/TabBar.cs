@@ -33,7 +33,7 @@ namespace Dastan.Scenester.Editor.UI.SceneDirector.Bar
                 base.Add(newScenarioButtonContainer);
             }
             
-            MarkCurrentTab(newScenarioButtonContainer);
+            newScenarioButtonContainer.ShowScenario();
         }
 
 

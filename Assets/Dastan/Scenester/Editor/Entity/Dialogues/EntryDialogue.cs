@@ -1,5 +1,5 @@
 using Dastan.Scenester.Editor.Enumeration;
-using Dastan.Scenester.Entity.Base;
+using UnityEngine;
 
 namespace Dastan.Scenester.Editor.Entity.Base
 {
@@ -11,7 +11,12 @@ namespace Dastan.Scenester.Editor.Entity.Base
 
         public override Dialogue Execute()
         {
-            return nextDialogue;
+            Debug.Log(nextDialogues);
+            foreach (Dialogue dialogue in nextDialogues)
+            {
+                dialogue.Execute();
+            }
+            return this;
         }
     }
 }

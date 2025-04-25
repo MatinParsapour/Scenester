@@ -1,58 +1,70 @@
 using System.Collections.Generic;
 using Dastan.Scenester.Editor.Enumeration;
-using Dastan.Scenester.Entity.Base;
 using UnityEditor;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Dastan.Scenester.Editor.Entity.Base
 {
     public abstract class Dialogue : SceneUnit
     {
-        [HideInInspector] 
-        public Dialogue nextDialogue;
         [HideInInspector]
-        public List<Component> components;
+        [SerializeField]
+        public List<Dialogue> nextDialogues = new();
 
-        public Scenario Scenario { get; set; }
+        [HideInInspector]
+        [SerializeField]
+        public List<Component> components = new();
+        public Vector2 Position { get; set; }
         
+        [SerializeField]
+        public Scenario Scenario { get; set; }
+
+        private void OnEnable()
+        {
+            nextDialogues = new List<Dialogue>();
+            components = new List<Component>();
+        }
+
         protected Dialogue(SceneUnitType type, Scenario scenario): base(type)
         {
             Scenario = scenario;
         }
 
-        private void UpdateDialogues(Dialogue dialogue)
-        {
-            nextDialogue = dialogue;
-            EditorUtility.SetDirty(Scenario);
-            EditorUtility.SetDirty(this);
-        }
-
-        private void UpdateComponents(Component component, bool add)
+        private void UpdateList<T>(T unit, List<T> list, bool add) where T : SceneUnit
         {
             if (add)
             {
-                components.Add(component);
+                list.Add(unit);
             }
             else
             {
-                components.Remove(component);
+                list.Remove(unit);
             }
             
             EditorUtility.SetDirty(Scenario);
             EditorUtility.SetDirty(this);
+            
+        }
+
+        private void UpdateDialogues(Dialogue next, bool add)
+        {
+            UpdateList(next, nextDialogues, add);
+        }
+
+        private void UpdateComponents(Component component, bool add)
+        {
+            UpdateList(component, components, add);
         }
 
 
-        public void AddNext(Dialogue dialogue)
+        public void AddNext(Dialogue next)
         {
-            UpdateDialogues(dialogue);
+            UpdateDialogues(next, true);
         }
 
-        public void RemoveNext()
+        public void RemoveNext(Dialogue next)
         {
-            UpdateDialogues(null);
+            UpdateDialogues(next, false);
         }
 
         public void AddComponent(Component component)

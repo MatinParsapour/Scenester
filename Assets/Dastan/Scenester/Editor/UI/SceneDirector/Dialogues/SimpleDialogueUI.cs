@@ -11,8 +11,8 @@ namespace Dastan.Scenester.Editor.UI.SceneDirector.Dialogues
     {
         public SimpleDialogueUI(Dialogue dialogue) : base(dialogue)
         {
-            inputContainer.Add(PortUtil.CreatePort(Direction.Input, Port.Capacity.Single));
-            outputContainer.Add(PortUtil.CreatePort(Direction.Output, Port.Capacity.Single));
+            inputContainer.Add(PortUtil.CreatePort(Direction.Input, Port.Capacity.Multi));
+            outputContainer.Add(PortUtil.CreatePort(Direction.Output, Port.Capacity.Multi));
 
             RefreshExpandedState();
             RefreshPorts();

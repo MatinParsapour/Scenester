@@ -1,5 +1,5 @@
 using System;
-using Dastan.Scenester.Entity.Base;
+using Dastan.Scenester.Editor.Entity.Base;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;

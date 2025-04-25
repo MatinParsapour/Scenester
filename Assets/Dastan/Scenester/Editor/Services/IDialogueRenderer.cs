@@ -3,10 +3,10 @@ using Dastan.Scenester.Editor.UI.SceneDirector.Core;
 
 namespace Dastan.Scenester.Editor.Services
 {
-    public interface IScenarioLoader : IService
+    public interface IDialogueRenderer : IService
     {
-        
-        public Scenario LoadScenarioPanel();
-        
+
+        void RenderDialogue(ScenarioUI scenarioUI, DialogueUI dialogueUI);
+
     }
 }

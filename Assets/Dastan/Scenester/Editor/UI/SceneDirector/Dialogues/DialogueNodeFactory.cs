@@ -14,32 +14,36 @@ namespace Dastan.Scenester.Editor.UI.SceneDirector.Dialogues
     public class DialogueNodeFactory
     {
 
-        private static readonly Dictionary<SceneUnitType, Func<Scenario, Vector2, DialogueUI>> _dialogueUIs = new Dictionary<SceneUnitType, Func<Scenario, Vector2, DialogueUI>>()
+        private static readonly Dictionary<SceneUnitType, Func<Scenario, Vector2, Dialogue, DialogueUI>> NewDialogueUI = new Dictionary<SceneUnitType, Func<Scenario, Vector2, Dialogue, DialogueUI>>()
         {
             { SceneUnitType.SimpleDialogue, CreateSimpleDialogue },
             { SceneUnitType.Entry, CreateEntryDialogue }
         };
         
-        private static T CreateDialogue<T>(Scenario scenario, Vector2 position, Dialogue dialogue) where T : DialogueUI
+        private static T CreateDialogue<T>(Vector2 position, Dialogue dialogue) where T : DialogueUI
         {
-            T simpleDialogueUI = (T) Activator.CreateInstance(typeof(T), new object[] {dialogue});
-            simpleDialogueUI.SetPosition(new Rect(position, new Vector2(100, 100)));
-            return simpleDialogueUI;
+            T dialogueUI = (T) Activator.CreateInstance(typeof(T), new object[] {dialogue});
+            dialogueUI.SetPosition(new Rect(position, new Vector2(100, 100)));
+            return dialogueUI;
         }
         
-        public static SimpleDialogueUI CreateSimpleDialogue(Scenario scenario, Vector2 position)
+        public static SimpleDialogueUI CreateSimpleDialogue(Scenario scenario, Vector2 position, Dialogue dialogue)
         {
-            return CreateDialogue<SimpleDialogueUI>(scenario, position, DialogueFactory.CreateSimpleDialogue(scenario, position));
+            dialogue ??= DialogueFactory.CreateSimpleDialogue(scenario, position);
+            return CreateDialogue<SimpleDialogueUI>(position, dialogue);
         }
 
-        public static EntryDialogueUI CreateEntryDialogue(Scenario scenario, Vector2 position)
+        public static EntryDialogueUI CreateEntryDialogue(Scenario scenario, Vector2 position, Dialogue dialogue)
         {
-            return CreateDialogue<EntryDialogueUI>(scenario, position, DialogueFactory.CreateEntryDialogue(scenario, position));
+            dialogue ??= DialogueFactory.CreateEntryDialogue(scenario, position);
+            EntryDialogueUI entryDialogueUI = CreateDialogue<EntryDialogueUI>(position, dialogue);
+            scenario.entryDialogue = entryDialogueUI.Dialogue as EntryDialogue;
+            return entryDialogueUI;
         }
 
         public static DialogueUI CreateDialogue(Scenario scenario, Vector2 position, Dialogue dialogue)
         {
-            return _dialogueUIs.TryGetValue(dialogue.type, out Func<Scenario, Vector2, DialogueUI> factory) ? factory(scenario, position) : null; 
+            return NewDialogueUI.TryGetValue(dialogue.type, out Func<Scenario, Vector2, Dialogue, DialogueUI> factory) ? factory(scenario, position, dialogue) : null; 
         }
     }
 }
