@@ -19,7 +19,8 @@ namespace Dastan.Scenester.Editor.UI.Btn
         public ScenarioButtonContainer(ScenarioUI scenarioUI)
         { 
             ScenarioUI = scenarioUI;
-            ScenarioUI.Scenario.key = "Scenario " + (SceneManager.SizeScene() + 1);
+            ScenarioUI.Scenario.key ??= "Scenario " + (SceneManager.SizeScene() + 1);
+            name = ScenarioUI.Scenario.key;
             AddButtons();
             
             Style();
@@ -44,7 +45,7 @@ namespace Dastan.Scenester.Editor.UI.Btn
             AddToClassList("tab-container");
         }
         
-        private void ShowScenario()
+        public void ShowScenario()
         {
             SceneContainer.GetInstance().ChangeUI(ScenarioUI);
             SceneUnitInspector.GetInstance(ScenarioUI.Scenario).ChangeInspector();

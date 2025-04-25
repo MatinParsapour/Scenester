@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Dastan.Scenester.Editor.Entity.Base;
 using Dastan.Scenester.Editor.Enumeration;
-using Dastan.Scenester.Editor.UI.SceneDirector.Dialogues;
 using UnityEngine;
 using Component = Dastan.Scenester.Editor.Entity.Base.Component;
 
@@ -17,7 +16,8 @@ namespace Dastan.Scenester.Editor.Entity.Dialogues
             dialogue.key = prefix + " " + (scenario.GetDialogues().Count + 1);
             dialogue.components = new List<Component>();
             dialogue.type = type;
-            scenario.AddDialogue(dialogue, position);
+            dialogue.Position = position;
+            scenario.AddDialogue(dialogue);
             return dialogue;
         }
 
