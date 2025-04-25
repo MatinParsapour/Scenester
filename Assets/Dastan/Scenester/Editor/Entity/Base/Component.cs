@@ -1,11 +1,12 @@
 using Dastan.Scenester.Editor.Enumeration;
-using Dastan.Scenester.Entity.Base;
+using UnityEngine;
 
 namespace Dastan.Scenester.Editor.Entity.Base
 {
     public abstract class Component : SceneUnit
     {
 
+        [SerializeField]
         public Dialogue Dialogue { get; set; }
         
         protected Component(Dialogue dialogue, SceneUnitType type) : base(type)

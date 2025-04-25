@@ -1,10 +1,8 @@
-using System;
-using System.Reflection;
 using Dastan.Scenester.Editor.Entity.Attribute;
 using UnityEditor;
 using UnityEngine;
 
-namespace Dastan.Scenester.Editor.Entity.Drawer
+namespace Dastan.Scenester.Editor.Drawer
 {
     [CustomPropertyDrawer(typeof(ReadOnlyAttribute))]
     public class ReadOnlyDrawer : PropertyDrawer

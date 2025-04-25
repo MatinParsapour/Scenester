@@ -1,13 +1,7 @@
 using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
 using Dastan.Scenester.Editor.Enumeration;
-using Dastan.Scenester.Entity.Base;
-using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Serialization;
-using Vector2 = UnityEngine.Vector2;
 
 namespace Dastan.Scenester.Editor.Entity.Base
 {
@@ -21,15 +15,16 @@ namespace Dastan.Scenester.Editor.Entity.Base
         }
 
         [HideInInspector]
+        [SerializeField]
         public EntryDialogue entryDialogue;
-        private readonly Dictionary<Dialogue, Vector2> _dialogues = new Dictionary<Dialogue, Vector2>();
+        private readonly List<Dialogue> _dialogues = new List<Dialogue>();
 
 
-        private void UpdateDialogues(Dialogue dialogue, Vector2 position, bool add)
+        private void UpdateDialogues(Dialogue dialogue, bool add)
         {
             if (add)
             {
-                _dialogues.Add(dialogue, position);
+                _dialogues.Add(dialogue);
             }
             else
             {
@@ -40,17 +35,17 @@ namespace Dastan.Scenester.Editor.Entity.Base
         }
         
 
-        public void AddDialogue(Dialogue dialogue, Vector2 position)
+        public void AddDialogue(Dialogue dialogue)
         {
-            UpdateDialogues(dialogue, position, true);
+            UpdateDialogues(dialogue, true);
         }
 
         public void RemoveDialogue(Dialogue dialogue)
         {
-            UpdateDialogues(dialogue, Vector2.zero, false);
+            UpdateDialogues(dialogue, false);
         }
 
-        public Dictionary<Dialogue, Vector2> GetDialogues()
+        public List<Dialogue> GetDialogues()
         {
             return _dialogues;
         }
@@ -58,6 +53,7 @@ namespace Dastan.Scenester.Editor.Entity.Base
 
         public void Play()
         {
+            
             entryDialogue.Execute();
         }
         

@@ -1,4 +1,4 @@
-using Dastan.Scenester.Entity.Base;
+using Dastan.Scenester.Editor.Entity.Base;
 
 namespace Dastan.Scenester.Editor.Services
 {

@@ -12,6 +12,7 @@ namespace Dastan.Scenester.Editor.UI.SceneDirector.Core
 {
     public class ScenarioUI : GraphView
     {
+        public EntryDialogueUI Entry { get; private set; }
 
         private readonly Scenario _scenario;
 
@@ -31,35 +32,23 @@ namespace Dastan.Scenester.Editor.UI.SceneDirector.Core
 
         private void InitializeUI()
         {
-            // Enable zoom and dragging
             SetupZoom(ContentZoomer.DefaultMinScale, ContentZoomer.DefaultMaxScale);
 
             this.AddManipulator(new ContentDragger());
             this.AddManipulator(new SelectionDragger());
-            // this.AddManipulator(new RectangleSelector());
 
 
-            // Add grid background
             GridBackground grid = new GridBackground();
             Insert(0, grid);
+            
+            AddEntryDialogue();
+        }
 
-            IVisualElementScheduledItem scheduled = null;
-            // Using execute create the entry point when the UI is initialized
-            scheduled = schedule.Execute(() =>
-            {
-                if (float.IsNaN(contentContainer.resolvedStyle.width) || float.IsNaN(contentContainer.resolvedStyle.height))
-                {
-                    return;
-                }
-                
-                const float offset = 200;
-                Debug.Log("Width: " + contentContainer.resolvedStyle.width);
-                Debug.Log("Height: " + contentContainer.resolvedStyle.height);
-                EntryDialogueUI entry = DialogueNodeFactory.CreateEntryDialogue(_scenario, new Vector2(contentContainer.resolvedStyle.width - offset, contentContainer.resolvedStyle.height / 2));
-                entry.SetPosition(new Rect(new Vector2(100, 100), new Vector2(100, 100)));
-                AddElement(entry);
-                scheduled.Pause();
-            }).Every(16);
+        private void AddEntryDialogue()
+        {
+            Vector2 desiredPosition = new Vector2(700, 150);
+            Entry = _scenario.entryDialogue == null ? DialogueNodeFactory.CreateEntryDialogue(_scenario, desiredPosition, null) : DialogueNodeFactory.CreateEntryDialogue(_scenario, desiredPosition, _scenario.entryDialogue);
+            AddElement(Entry);
         }
 
         private void OnMouseDown(MouseDownEvent e)
@@ -75,7 +64,7 @@ namespace Dastan.Scenester.Editor.UI.SceneDirector.Core
             base.BuildContextualMenu(evt);
             Vector2 graphMousePosition = contentViewContainer.WorldToLocal(evt.mousePosition);
             
-            evt.menu.AppendAction("Dialogues/Simple Dialogue", action => AddElement(DialogueNodeFactory.CreateSimpleDialogue(_scenario, graphMousePosition)), DropdownMenuAction.AlwaysEnabled);
+            evt.menu.AppendAction("Dialogues/Simple Dialogue", action => AddElement(DialogueNodeFactory.CreateSimpleDialogue(_scenario, graphMousePosition, null)), DropdownMenuAction.AlwaysEnabled);
         }
 
         public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)

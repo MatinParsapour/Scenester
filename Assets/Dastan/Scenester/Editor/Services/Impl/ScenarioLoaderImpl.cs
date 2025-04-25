@@ -20,8 +20,15 @@ namespace Dastan.Scenester.Editor.Services.Impl
             {
                 return null;
             }
+
+            string path = "Assets" + scenarioPath.Substring(Application.dataPath.Length);
+            return LoadScenario(path);
             
-            Object obj = AssetDatabase.LoadAssetAtPath<Object>("Assets" + scenarioPath.Substring(Application.dataPath.Length));
+        }
+
+        public Scenario LoadScenario(string path)
+        {
+            Object obj = AssetDatabase.LoadAssetAtPath<Object>(path);
             if (obj is not Scenario scenario)
             {
                 EditorUtility.DisplayDialog("Error", "The selected file is not a scenario.", "OK");
@@ -35,24 +42,6 @@ namespace Dastan.Scenester.Editor.Services.Impl
             }
             
             return scenario;
-            
-        }
-
-        public void OpenScenario(ScenarioUI scenarioUI)
-        {
-            if (scenarioUI.Scenario.isNew)
-            {
-                AddEntryDialogue(scenarioUI);
-            }
-        }
-
-        private static void AddEntryDialogue(ScenarioUI scenarioUI)
-        {
-            scenarioUI.schedule.Execute(() =>
-            {
-                const float offset = 200;
-                scenarioUI.AddElement(DialogueNodeFactory.CreateEntryDialogue(scenarioUI.Scenario, new Vector2(scenarioUI.contentContainer.resolvedStyle.width - offset, (scenarioUI.contentContainer.resolvedStyle.height / 2))));
-            }).ExecuteLater(300);
         }
     }
 }

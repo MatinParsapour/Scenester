@@ -4,6 +4,7 @@ using Dastan.Scenester.Editor.util;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Dastan.Scenester.Editor.UI.SceneDirector.Dialogues
 {
@@ -11,15 +12,10 @@ namespace Dastan.Scenester.Editor.UI.SceneDirector.Dialogues
     {
         public EntryDialogueUI(Dialogue dialogue) : base(dialogue)
         {
-            inputContainer.Add(PortUtil.CreatePort(Direction.Input, Port.Capacity.Single));
+            inputContainer.Add(PortUtil.CreatePort(Direction.Input, Port.Capacity.Multi));
             
             RefreshExpandedState();
             RefreshPorts();
-        }
-
-        public override void SetPosition(Rect newPos)
-        {
-            
         }
     }
 }

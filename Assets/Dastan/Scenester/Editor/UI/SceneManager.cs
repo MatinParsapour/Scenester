@@ -19,7 +19,6 @@ namespace Dastan.Scenester.Editor.UI
     public class SceneManager
     { 
         private static readonly ScenarioSaveAgentService ScenarioAgent = new ScenarioSaveAgentService();
-        private static readonly DialogueSaveAgentService DialogueAgent = new DialogueSaveAgentService();
         private static readonly IScenarioLoader ScenarioLoader = new ScenarioLoaderImpl();
         private static readonly IScenarioRenderer ScenarioRenderer = new ScenarioRendererImpl();
         
@@ -47,18 +46,8 @@ namespace Dastan.Scenester.Editor.UI
             ProgressBarUtility progress = ProgressBarUtility.Initialize("Saving...", "Working...").Progress();
             try
             {
-                bool success = ScenarioAgent.Save(scenario);
+                ScenarioAgent.Save(scenario);
                 progress.SetInfo("Saving Scenario...").Progress();
-                // List<Dialogue> dialogues = scenario.GetDialogues();
-                // progress.SetIncrementer(90f / dialogues.Count);
-                // if (success)
-                // {
-                //     foreach (Dialogue dialogue in dialogues)
-                //     {
-                //         DialogueAgent.Save(dialogue);
-                //         progress.SetInfo("Saving Dialogue...").Progress();
-                //     }
-                // }
                 yield return null;
                 progress.Done();
             }
