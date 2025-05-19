@@ -15,6 +15,7 @@ namespace Dastan.Scenester.Editor.Entity.Dialogues
             dialogue.Scenario = scenario;
             dialogue.key = prefix + " " + (scenario.GetDialogues().Count + 1);
             dialogue.components = new List<Component>();
+            dialogue.nextDialogues = new List<Dialogue>();
             dialogue.type = type;
             dialogue.Position = position;
             scenario.AddDialogue(dialogue);

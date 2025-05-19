@@ -8,7 +8,9 @@ namespace Dastan.Scenester.Editor.Entity.Components
     public class AudioComponent : Component
     {
 
+        [SerializeField]
         public AudioSource audioSource;
+        [SerializeField]
         public AudioClip audioClip;
         
         public AudioComponent(Dialogue dialogue) : base(dialogue,SceneUnitType.Audio)

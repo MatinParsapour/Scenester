@@ -30,8 +30,9 @@ namespace Dastan.Scenester.Editor.Entity.Base
             {
                 _dialogues.Remove(dialogue);
             }
-            
+#if UNITY_EDITOR
             EditorUtility.SetDirty(this);
+#endif
         }
         
 

@@ -17,6 +17,7 @@ namespace Dastan.Scenester.Editor.UI.Panel.ScenePanel
 
         private void OnEnable()
         {
+            if (target == null) return;
             _dialogue = (Dialogue)target;
             
             CreateComponents();

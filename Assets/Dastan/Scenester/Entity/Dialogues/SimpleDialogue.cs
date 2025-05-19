@@ -1,5 +1,6 @@
 using Dastan.Scenester.Editor.Entity.Base;
 using Dastan.Scenester.Editor.Enumeration;
+using UnityEngine;
 
 namespace Dastan.Scenester.Editor.Entity.Dialogues
 {
@@ -11,8 +12,10 @@ namespace Dastan.Scenester.Editor.Entity.Dialogues
 
         public override Dialogue Execute()
         {
+            Debug.Log("Components : " + components.Count);
             foreach (Base.Component component in components)
             {
+                Debug.Log("Running Component : " + component.name);
                 component.Execute();
             }
             
