@@ -32,7 +32,9 @@ namespace Dastan.Scenester.Editor.UI.Inspector
 
         private void OnGUI()
         {
+#if UNITY_EDITOR
             _editor.OnInspectorGUI();
+#endif
         }
     }
 }

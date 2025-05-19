@@ -1,5 +1,40 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8528031223599600384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e914c3bdd06489bbd53026bb1c7849c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 2
+  key: 
+  isNew: 0
+  audioSource: {fileID: 0}
+  audioClip: {fileID: 8300000, guid: 262067e90abc5424b85961e60832a626, type: 3}
+--- !u!114 &-7467808767423217500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29be7f41c73a426f8d290dafc4ec61f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  key: Simple Dialogue 2
+  isNew: 0
+  nextDialogues: []
+  components:
+  - {fileID: -8528031223599600384}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15,4 +50,22 @@ MonoBehaviour:
   type: 1
   key: Scenario 1
   isNew: 0
-  entryDialogue: {fileID: 0}
+  entryDialogue: {fileID: 6391729552437597936}
+--- !u!114 &6391729552437597936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d3657ce753246288338b8701691bcb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 4
+  key: Entry Dialogue 1
+  isNew: 0
+  nextDialogues:
+  - {fileID: -7467808767423217500}
+  components: []

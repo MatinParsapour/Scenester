@@ -50,7 +50,7 @@ namespace Dastan.Scenester.Editor.UI.SceneDirector.Core
             Entry = _scenario.entryDialogue == null ? DialogueNodeFactory.CreateEntryDialogue(_scenario, desiredPosition, null) : DialogueNodeFactory.CreateEntryDialogue(_scenario, desiredPosition, _scenario.entryDialogue);
             AddElement(Entry);
         }
-
+        
         private void OnMouseDown(MouseDownEvent e)
         {
             if (e.button == 0)

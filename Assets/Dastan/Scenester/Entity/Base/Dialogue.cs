@@ -19,11 +19,11 @@ namespace Dastan.Scenester.Editor.Entity.Base
         [SerializeField]
         public Scenario Scenario { get; set; }
 
-        private void OnEnable()
-        {
-            nextDialogues = new List<Dialogue>();
-            components = new List<Component>();
-        }
+        // private void OnEnable()
+        // {
+        //     nextDialogues = new List<Dialogue>();
+        //     components = new List<Component>();
+        // }
 
         protected Dialogue(SceneUnitType type, Scenario scenario): base(type)
         {
@@ -32,6 +32,8 @@ namespace Dastan.Scenester.Editor.Entity.Base
 
         private void UpdateList<T>(T unit, List<T> list, bool add) where T : SceneUnit
         {
+            list ??= new();
+            
             if (add)
             {
                 list.Add(unit);
@@ -41,9 +43,10 @@ namespace Dastan.Scenester.Editor.Entity.Base
                 list.Remove(unit);
             }
             
+#if UNITY_EDITOR            
             EditorUtility.SetDirty(Scenario);
             EditorUtility.SetDirty(this);
-            
+#endif
         }
 
         private void UpdateDialogues(Dialogue next, bool add)

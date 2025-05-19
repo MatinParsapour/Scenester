@@ -11,9 +11,10 @@ namespace Dastan.Scenester.Editor.Entity.Base
 
         public override Dialogue Execute()
         {
-            Debug.Log(nextDialogues);
+            Debug.Log("Entry Dialogue Next Dialogue : " + nextDialogues.Count);
             foreach (Dialogue dialogue in nextDialogues)
             {
+                Debug.Log("Running Dialogue : " + dialogue.name);
                 dialogue.Execute();
             }
             return this;

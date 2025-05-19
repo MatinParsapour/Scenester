@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using Dastan.Scenester.Editor.Entity.Base;
 using UnityEditor;
 using UnityEngine;
+using Component = Dastan.Scenester.Editor.Entity.Base.Component;
 
 namespace Dastan.Scenester.Editor.Services.Impl
 {
@@ -37,12 +39,52 @@ namespace Dastan.Scenester.Editor.Services.Impl
                     AssetDatabase.ImportAsset((AssetDatabase.GetAssetPath(scenario)));
                 }
             }
+
+            AddDialogueSubAssets(scenario, scenario.entryDialogue, new HashSet<Dialogue>());
             
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
             EditorUtility.ClearDirty(scenario);
             scenario.isNew = false;
             return true;
+        }
+
+        private void AddDialogueSubAssets(Scenario scenario, Dialogue dialogue, HashSet<Dialogue> addedDialogues)
+        {
+            if (dialogue == null || addedDialogues.Contains(dialogue))
+            {
+                return; // already added, or null
+            }
+
+            addedDialogues.Add(dialogue);
+
+            if (AssetDatabase.GetAssetPath(dialogue) == "") // means not an asset yet
+            {
+                AssetDatabase.AddObjectToAsset(dialogue, scenario);
+            }
+
+            foreach (Component component in dialogue.components)
+            {
+                AddComponentSubAssets(scenario, component);
+            }
+
+            foreach (var nextDialogue in dialogue.nextDialogues)
+            {
+                AddDialogueSubAssets(scenario, nextDialogue, addedDialogues);
+            }
+        }
+
+        private void AddComponentSubAssets(Scenario scenario, Component component)
+        {
+            if (component == null)
+            {
+                return;
+            }
+
+            if (AssetDatabase.GetAssetPath(component) == "")
+            {
+                AssetDatabase.AddObjectToAsset(component, scenario);
+            }
         }
     }
 }

@@ -11,10 +11,10 @@ namespace Dastan.Scenester.Editor.Entity.Components
     public class SubtitleComponent : Component
     {
         
-        [Tooltip("The text you want to display")]
+        [Tooltip("The text you want to display"), SerializeField]
         public string text;
         
-        [Tooltip("The subtitle object (TextMeshPro)")]
+        [Tooltip("The subtitle object (TextMeshPro)"), SerializeField]
         public TextMeshProUGUI display; 
         
         public SubtitleComponent(Dialogue dialogue) : base(dialogue, SceneUnitType.Subtitle)
@@ -23,7 +23,9 @@ namespace Dastan.Scenester.Editor.Entity.Components
 
         public override Component Execute()
         {
+            Debug.Log(display.text);
             display.text = text;
+            Debug.Log(display.text);
             return this;
         }
     }
